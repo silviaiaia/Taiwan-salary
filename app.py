@@ -66,6 +66,18 @@ else:
     with col5:
         st.metric("最高薪資", f"${filtered_df['Monthly_Salary'].max():,.0f}")
 
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        st.metric("P10", f"${filtered_df['Monthly_Salary'].quantile(0.10):,.0f}")
+    with col2:
+        st.metric("P25", f"${filtered_df['Monthly_Salary'].quantile(0.25):,.0f}")
+    with col3:
+        st.metric("P50 中位數", f"${filtered_df['Monthly_Salary'].median():,.0f}")
+    with col4:
+        st.metric("P75", f"${filtered_df['Monthly_Salary'].quantile(0.75):,.0f}")
+    with col5:
+        st.metric("P95", f"${filtered_df['Monthly_Salary'].quantile(0.95):,.0f}"))
+
     st.divider()
 
     col_chart1, col_chart2 = st.columns(2)
@@ -121,3 +133,4 @@ else:
         markers=True
     )
     st.plotly_chart(fig_line, use_container_width=True)
+
