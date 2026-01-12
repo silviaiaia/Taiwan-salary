@@ -76,7 +76,7 @@ else:
     with col4:
         st.metric("P75", f"${filtered_df['Monthly_Salary'].quantile(0.75):,.0f}")
     with col5:
-        st.metric("P95", f"${filtered_df['Monthly_Salary'].quantile(0.95):,.0f}"))
+        st.metric("P95", f"${filtered_df['Monthly_Salary'].quantile(0.95):,.0f}")
 
     st.divider()
 
@@ -133,4 +133,5 @@ else:
         markers=True
     )
     st.plotly_chart(fig_line, use_container_width=True)
+
 
