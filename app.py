@@ -6,6 +6,9 @@ import os
 st.set_page_config(page_title="薪資結構統計", layout="wide")
 
 st.title("薪資結構統計")
+st.markdown('''
+    :blue-background[] :blue-background[對標產業基準：電子零組件製造業] :blue-background[]
+    ''')
 
 FILE_NAME = "Dataset.xlsx"
 
@@ -45,6 +48,10 @@ selected_jobs = st.sidebar.multiselect(
     default=job_titles
 )
 
+st.sidebar.divider()
+
+st.sidebar.markdown("資料來源：勞動部")
+
 filtered_df = df[
     (df['Year'].isin(selected_years)) & 
     (df['Job_Title'].isin(selected_jobs))
@@ -56,7 +63,8 @@ else:
     st.subheader("資料概覽")
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.metric("總筆數", len(filtered_df))
+        # st.metric("總筆數", len(filtered_df))
+        st.metric("資料區間", "2021~2024")
     with col2:
         st.metric("平均月薪", f"${filtered_df['Monthly_Salary'].mean():,.0f}")
     with col3:
@@ -76,7 +84,7 @@ else:
     with col4:
         st.metric("P75", f"${filtered_df['Monthly_Salary'].quantile(0.75):,.0f}")
     with col5:
-        st.metric("P95", f"${filtered_df['Monthly_Salary'].quantile(0.95):,.0f}")
+        st.metric("P90", f"${filtered_df['Monthly_Salary'].quantile(0.90):,.0f}")
 
     st.divider()
 
@@ -134,4 +142,5 @@ else:
     )
     st.plotly_chart(fig_line, use_container_width=True)
 
-
+    with st.expander("查看原始資料"):
+            st.dataframe(df, use_container_width=True)
