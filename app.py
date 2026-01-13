@@ -66,9 +66,9 @@ else:
         # st.metric("總筆數", len(filtered_df))
         st.metric("資料區間", "2021~2024")
     with col2:
-        st.metric("平均月薪", f"${filtered_df['Monthly_Salary'].mean():,.0f}")
-    with col3:
         st.metric("職位數量", filtered_df['Job_Title'].nunique())
+    with col3:
+        st.metric("平均月薪", f"${filtered_df['Monthly_Salary'].mean():,.0f}")
     with col4:
         st.metric("最低薪資", f"${filtered_df['Monthly_Salary'].min():,.0f}")
     with col5:
@@ -143,4 +143,5 @@ else:
     st.plotly_chart(fig_line, use_container_width=True)
 
     with st.expander("查看原始資料"):
+
             st.dataframe(df, use_container_width=True)
