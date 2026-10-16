@@ -41,8 +41,7 @@ st.caption(
 st.info(
     "Each data point is the survey's **average salary for one occupation in one year**, not an "
     "individual's salary. Summary figures below describe the spread across occupations and are "
-    "not weighted by headcount, which the survey does not publish.",
-    icon="ℹ️",
+    "not weighted by headcount, which the survey does not publish."
 )
 
 # ---------- Filters ----------
