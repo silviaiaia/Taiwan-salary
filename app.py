@@ -1,147 +1,238 @@
-import streamlit as st
 import pandas as pd
 import plotly.express as px
-import os
+import plotly.graph_objects as go
+import streamlit as st
 
-st.set_page_config(page_title="薪資結構統計", layout="wide")
+BENCHMARK_PATH = "data/processed/salary_benchmark.csv"
+JOB_ADS_PATH = "data/raw/job_ads_104.csv"
+SOURCE_URL = "https://statdb.mol.gov.tw/"
 
-st.title("薪資結構統計")
-st.markdown('''
-    :blue-background[] :blue-background[對標產業基準：電子零組件製造業] :blue-background[]
-    ''')
-
-FILE_NAME = "Dataset.xlsx"
-
-if not os.path.exists(FILE_NAME):
-    st.error(f"找不到檔案：{FILE_NAME}")
-    st.info("請確認 Excel 檔案已上傳到 GitHub，且與 app.py 位於同一層目錄。")
-    st.stop()
-
-try:
-    df = pd.read_excel(FILE_NAME, engine='openpyxl')
-
-    if df['Monthly_Salary'].dtype == 'object':
-        df['Monthly_Salary'] = df['Monthly_Salary'].astype(str).str.replace(',', '').astype(float)
-
-    df['Year'] = df['Year'].astype(int)
-
-    df = df.dropna(subset=['Monthly_Salary', 'Job_Title', 'Year'])
-    
-except Exception as e:
-    st.error(f"資料讀取錯誤：{str(e)}")
-    st.info("請確認 Excel 內容格式正確，需包含 Monthly_Salary, Year, Job_Title 欄位。")
-    st.stop()
-
-st.sidebar.header("篩選條件")
-
-years = sorted(df['Year'].unique())
-selected_years = st.sidebar.multiselect(
-    "選擇年份",
-    options=years,
-    default=years
-)
-
-job_titles = sorted(df['Job_Title'].unique())
-selected_jobs = st.sidebar.multiselect(
-    "選擇職位",
-    options=job_titles,
-    default=job_titles
-)
-
-st.sidebar.divider()
-
-st.sidebar.markdown("資料來源：勞動部")
-
-filtered_df = df[
-    (df['Year'].isin(selected_years)) & 
-    (df['Job_Title'].isin(selected_jobs))
+# Fixed colour per occupation group, so filtering never repaints the remaining groups.
+GROUP_ORDER = [
+    "Managers and supervisors",
+    "Professionals",
+    "Technicians and associate professionals",
+    "Clerical support",
+    "Machine operators and assemblers",
 ]
+GROUP_COLOURS = dict(zip(GROUP_ORDER, ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]))
 
-if len(filtered_df) == 0:
-    st.warning("沒有符合篩選條件的資料，請調整篩選條件。")
-else:
-    st.subheader("資料概覽")
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        # st.metric("總筆數", len(filtered_df))
-        st.metric("資料區間", "2021~2024")
-    with col2:
-        st.metric("職位數量", filtered_df['Job_Title'].nunique())
-    with col3:
-        st.metric("平均月薪", f"${filtered_df['Monthly_Salary'].mean():,.0f}")
-    with col4:
-        st.metric("最低薪資", f"${filtered_df['Monthly_Salary'].min():,.0f}")
-    with col5:
-        st.metric("最高薪資", f"${filtered_df['Monthly_Salary'].max():,.0f}")
+st.set_page_config(page_title="Taiwan Salary Benchmark", layout="wide")
 
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.metric("P10", f"${filtered_df['Monthly_Salary'].quantile(0.10):,.0f}")
-    with col2:
-        st.metric("P25", f"${filtered_df['Monthly_Salary'].quantile(0.25):,.0f}")
-    with col3:
-        st.metric("P50 中位數", f"${filtered_df['Monthly_Salary'].median():,.0f}")
-    with col4:
-        st.metric("P75", f"${filtered_df['Monthly_Salary'].quantile(0.75):,.0f}")
-    with col5:
-        st.metric("P90", f"${filtered_df['Monthly_Salary'].quantile(0.90):,.0f}")
 
-    st.divider()
+@st.cache_data
+def load_data():
+    benchmark = pd.read_csv(BENCHMARK_PATH, dtype={"occupation_code": str})
+    ads = pd.read_csv(JOB_ADS_PATH, dtype={"occupation_code": str})
+    return benchmark, ads
 
-    col_chart1, col_chart2 = st.columns(2)
-    
-    with col_chart1:
-        st.subheader("薪資分布直方圖")
-        fig_hist = px.histogram(
-            filtered_df,
-            x='Monthly_Salary',
-            nbins=30,
-            title='月薪分布',
-            labels={'Monthly_Salary': '月薪', 'count': '人數'}
-        )
-        fig_hist.update_layout(showlegend=False)
-        st.plotly_chart(fig_hist, use_container_width=True)
-    
-    with col_chart2:
-        st.subheader("薪資箱型圖")
-        fig_box = px.box(
-            filtered_df,
-            y='Monthly_Salary',
-            title='薪資分布箱型圖',
-            labels={'Monthly_Salary': '月薪'}
-        )
-        st.plotly_chart(fig_box, use_container_width=True)
 
-    st.subheader("各職位平均薪資排行")
-    job_salary = filtered_df.groupby('Job_Title')['Monthly_Salary'].agg(['mean', 'count']).reset_index()
-    job_salary.columns = ['職位', '平均月薪', '樣本數']
-    job_salary = job_salary.sort_values('平均月薪', ascending=False)
-    
-    fig_bar = px.bar(
-        job_salary,
-        x='職位',
-        y='平均月薪',
-        title='各職位平均月薪比較',
-        text='平均月薪',
-        hover_data=['樣本數']
+def twd(value: float) -> str:
+    return f"NT${value:,.0f}"
+
+
+df, ads = load_data()
+
+st.title("Salary Benchmark: Taiwan Electronic Components Manufacturing")
+st.caption(
+    "Average July regular monthly earnings by occupation, 2021–2024. "
+    f"Source: Ministry of Labor (Taiwan), Occupational Wage Survey 職類別薪資調查 ([link]({SOURCE_URL}))."
+)
+st.info(
+    "Each data point is the survey's **average salary for one occupation in one year**, not an "
+    "individual's salary. Summary figures below describe the spread across occupations and are "
+    "not weighted by headcount, which the survey does not publish.",
+    icon="ℹ️",
+)
+
+# ---------- Filters ----------
+st.sidebar.header("Filters")
+years = sorted(df["year"].unique())
+selected_years = st.sidebar.multiselect("Years", years, default=years)
+selected_groups = st.sidebar.multiselect("Occupation groups", GROUP_ORDER, default=GROUP_ORDER)
+st.sidebar.divider()
+st.sidebar.markdown(
+    "**Data notes**\n\n"
+    "- 2021 covers all employees; 2022–2024 cover full-time employees only.\n"
+    "- Some 2021 categories were finer than in later years and have been combined. "
+    "See `clean.py` for the mapping."
+)
+
+filtered = df[df["year"].isin(selected_years) & df["occupation_group"].isin(selected_groups)]
+
+if filtered.empty:
+    st.warning("No data matches these filters.")
+    st.stop()
+
+# ---------- Overview ----------
+st.subheader("Overview")
+year_min, year_max = filtered["year"].min(), filtered["year"].max()
+salaries = filtered["monthly_salary_twd"]
+c1, c2, c3 = st.columns(3)
+c1.metric("Years", f"{year_min}–{year_max}" if year_min != year_max else str(year_min))
+c2.metric("Occupations", filtered["occupation_code"].nunique())
+c3.metric("Median of occupation averages", twd(salaries.median()))
+st.caption(
+    # "$" is escaped because Streamlit captions treat a pair of "$" as LaTeX.
+    f"Middle 50% of occupation averages: {twd(salaries.quantile(0.25))} – {twd(salaries.quantile(0.75))}."
+    .replace("$", "\\$")
+)
+
+st.divider()
+
+# ---------- Ranking for one year ----------
+st.subheader("Occupation ranking")
+rank_year = st.selectbox("Year", sorted(filtered["year"].unique(), reverse=True), key="rank_year")
+ranking = filtered[filtered["year"] == rank_year].sort_values("monthly_salary_twd")
+fig_rank = px.bar(
+    ranking,
+    x="monthly_salary_twd",
+    y="occupation_en",
+    color="occupation_group",
+    orientation="h",
+    color_discrete_map=GROUP_COLOURS,
+    category_orders={"occupation_group": GROUP_ORDER},
+    custom_data=["occupation_zh", "occupation_group"],
+    labels={"monthly_salary_twd": "Average monthly salary (NT$)", "occupation_en": "", "occupation_group": "Group"},
+)
+fig_rank.update_traces(
+    hovertemplate="<b>%{y}</b><br>%{customdata[0]}<br>%{customdata[1]}<br>NT$%{x:,.0f}<extra></extra>"
+)
+fig_rank.update_layout(
+    height=max(320, 26 * len(ranking)),
+    yaxis={"categoryorder": "array", "categoryarray": ranking["occupation_en"].tolist()},
+    xaxis_tickformat=",",
+    legend={"orientation": "h", "y": 1.02, "yanchor": "bottom", "x": 0, "title": None},
+    bargap=0.25,
+    margin={"l": 10, "r": 10, "t": 40, "b": 10},
+)
+st.plotly_chart(fig_rank, width="stretch")
+
+# ---------- Spread by group ----------
+st.subheader(f"Spread of occupation averages by group, {rank_year}")
+fig_strip = px.strip(
+    ranking,
+    x="monthly_salary_twd",
+    y="occupation_group",
+    color="occupation_group",
+    color_discrete_map=GROUP_COLOURS,
+    category_orders={"occupation_group": GROUP_ORDER},
+    hover_name="occupation_en",
+    labels={"monthly_salary_twd": "Average monthly salary (NT$)", "occupation_group": ""},
+)
+fig_strip.update_traces(marker={"size": 11, "opacity": 0.85}, jitter=0.5)
+fig_strip.update_layout(showlegend=False, xaxis_tickformat=",", height=300, margin={"l": 10, "r": 10, "t": 10, "b": 10})
+st.plotly_chart(fig_strip, width="stretch")
+st.caption("Each dot is one occupation.")
+
+st.divider()
+
+# ---------- Trend for chosen occupations ----------
+st.subheader("Change over time")
+default_trend = [
+    o for o in [
+        "ICT professionals (systems analysis, programming, database and network)",
+        "Electrical and electronics engineers",
+        "Assemblers",
+        "Semiconductor production line operators",
+    ] if o in set(filtered["occupation_en"])
+]
+chosen = st.multiselect(
+    "Occupations to compare (up to 6)",
+    sorted(filtered["occupation_en"].unique()),
+    default=default_trend,
+    max_selections=6,
+)
+if chosen:
+    trend = filtered[filtered["occupation_en"].isin(chosen)].sort_values("year")
+    fig_trend = px.line(
+        trend,
+        x="year",
+        y="monthly_salary_twd",
+        color="occupation_en",
+        markers=True,
+        color_discrete_sequence=["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"],
+        category_orders={"occupation_en": chosen},
+        labels={"year": "", "monthly_salary_twd": "Average monthly salary (NT$)", "occupation_en": ""},
     )
-    fig_bar.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
-    fig_bar.update_layout(xaxis_tickangle=-45)
-    st.plotly_chart(fig_bar, use_container_width=True)
-
-    st.subheader("年度薪資趨勢")
-    yearly_salary = filtered_df.groupby('Year')['Monthly_Salary'].mean().reset_index()
-    
-    fig_line = px.line(
-        yearly_salary,
-        x='Year',
-        y='Monthly_Salary',
-        title='歷年平均月薪趨勢',
-        labels={'Year': '年份', 'Monthly_Salary': '平均月薪'},
-        markers=True
+    fig_trend.update_traces(line={"width": 2}, marker={"size": 8})
+    if 2021 in trend["year"].values and 2022 in trend["year"].values:
+        fig_trend.add_vline(x=2021.5, line_dash="dot", line_color="grey")
+        fig_trend.add_annotation(
+            x=2021.5, y=1, yref="paper", text="Survey population changes", showarrow=False,
+            xanchor="left", xshift=4, font={"size": 11, "color": "grey"},
+        )
+    fig_trend.update_layout(
+        xaxis={"dtick": 1},
+        yaxis_tickformat=",",
+        hovermode="x unified",
+        legend={"orientation": "h", "y": -0.15, "x": 0},
+        margin={"l": 10, "r": 10, "t": 30, "b": 10},
     )
-    st.plotly_chart(fig_line, use_container_width=True)
+    st.plotly_chart(fig_trend, width="stretch")
+    st.caption(
+        "Changes between 2021 and 2022 partly reflect the switch from all employees to full-time "
+        "employees, so 2022–2024 is the cleaner comparison."
+    )
 
-    with st.expander("查看原始資料"):
+st.divider()
 
-            st.dataframe(df, use_container_width=True)
+# ---------- Job ads vs survey ----------
+st.subheader("Advertised salaries vs the survey benchmark")
+st.markdown(
+    "A small manual sample of job ads from 104, Taiwan's largest job board, for three occupations. "
+    "Most of these ads are for entry or junior roles, while the survey averages all employees in the "
+    "occupation, so advertised pay is expected to sit lower."
+)
+latest_year = df["year"].max()
+survey_latest = df[df["year"] == latest_year].set_index("occupation_code")
+ads = ads.assign(occupation_en=ads["occupation_code"].map(survey_latest["occupation_en"]))
+summary = (
+    ads.groupby(["occupation_code", "occupation_en"])["salary_used_twd"]
+    .agg(ad_average="mean", ads="count")
+    .reset_index()
+)
+summary["survey"] = summary["occupation_code"].map(survey_latest["monthly_salary_twd"])
+
+fig_ads = go.Figure()
+fig_ads.add_trace(go.Scatter(
+    x=ads["salary_used_twd"], y=ads["occupation_en"], mode="markers", name="Individual ad",
+    marker={"size": 9, "color": "#86b6ef", "line": {"width": 1, "color": "white"}},
+    customdata=ads[["advertised_title", "advertised_salary"]],
+    hovertemplate="%{customdata[0]}<br>%{customdata[1]}<extra></extra>",
+))
+fig_ads.add_trace(go.Scatter(
+    x=summary["ad_average"], y=summary["occupation_en"], mode="markers", name="Average of ads",
+    marker={"size": 14, "color": "#2a78d6", "symbol": "diamond", "line": {"width": 2, "color": "white"}},
+    hovertemplate="Average of ads: NT$%{x:,.0f}<extra></extra>",
+))
+fig_ads.add_trace(go.Scatter(
+    x=summary["survey"], y=summary["occupation_en"], mode="markers", name=f"Survey average ({latest_year})",
+    marker={"size": 14, "color": "#eb6834", "symbol": "line-ns", "line": {"width": 3, "color": "#eb6834"}},
+    hovertemplate="Survey: NT$%{x:,.0f}<extra></extra>",
+))
+fig_ads.update_layout(
+    xaxis={"title": "Monthly salary (NT$)", "tickformat": ","},
+    yaxis={"title": ""},
+    height=340,
+    legend={"orientation": "h", "y": 1.0, "yanchor": "bottom", "x": 0},
+    margin={"l": 10, "r": 10, "t": 60, "b": 10},
+)
+st.plotly_chart(fig_ads, width="stretch")
+st.caption(
+    "Ads with a range use the midpoint; ads stating only a minimum (\"or above\") use that minimum."
+)
+
+# ---------- Data ----------
+with st.expander("View and download the filtered data"):
+    st.dataframe(
+        filtered.rename(columns={"monthly_salary_twd": "monthly_salary (NT$)"}),
+        width="stretch",
+        hide_index=True,
+    )
+    st.download_button(
+        "Download CSV",
+        filtered.to_csv(index=False).encode("utf-8"),
+        file_name="salary_benchmark_filtered.csv",
+        mime="text/csv",
+    )

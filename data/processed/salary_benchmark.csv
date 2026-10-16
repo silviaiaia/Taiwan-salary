@@ -1,0 +1,113 @@
+year,occupation_code,occupation_en,occupation_zh,occupation_group,monthly_salary_twd,source_codes,survey_population
+2021,112000,Senior executives (general managers and CEOs),高階主管(總經理及總執行長),Managers and supervisors,175438,112000,All employees
+2021,120090,Middle managers,中階主管(經理),Managers and supervisors,116286,120090,All employees
+2021,214100,"Quality, industrial and production engineers",品管、工管及生管工程師,Professionals,64387,214102+214191,All employees
+2021,215190,Electrical and electronics engineers,電機、電子工程師,Professionals,70730,215100+215200,All employees
+2021,217300,Product and garment designers (incl. industrial design),產品及服裝設計師(含工業設計),Professionals,65199,217300,All employees
+2021,241100,Accountants and auditors,會(審)計師,Professionals,69438,241100,All employees
+2021,242100,Project managers (incl. management consultants),專案管理師(含經營管理顧問),Professionals,81423,242100,All employees
+2021,243100,Advertising and marketing professionals,廣告及行銷專業人員(含企劃),Professionals,70698,243100,All employees
+2021,250000,"ICT professionals (systems analysis, programming, database and network)",資訊及通訊專業人員(含系統分析、程式設計、資料庫及網路專業人員),Professionals,73946,251100+251290+252090,All employees
+2021,311390,Electrical and electronics technicians,電機、電子技術員,Technicians and associate professionals,44845,311300+311400,All employees
+2021,311700,"Quality, industrial and production technicians",品管、工管及生管技術員,Technicians and associate professionals,41979,311702+311791,All employees
+2021,312190,"Supervisors (site and office supervisors, section heads)",監督人員(含現場及辦公室主任、科/股長),Managers and supervisors,76592,312190,All employees
+2021,331300,Accounting associates,會計人員,Technicians and associate professionals,57634,331300,All employees
+2021,332290,Sales representatives,工商業銷售代表(含業務員),Technicians and associate professionals,59765,332290,All employees
+2021,332300,Purchasing officers,採購員,Technicians and associate professionals,52342,332300,All employees
+2021,334200,Executive secretaries,專業秘書,Technicians and associate professionals,63168,334200,All employees
+2021,341191,Legal associates,法務人員,Technicians and associate professionals,59502,341191,All employees
+2021,351090,IT operations and support technicians,資訊管理及維護技術員,Technicians and associate professionals,49931,351090,All employees
+2021,411002,General affairs clerks,總務,Clerical support,43964,411002,All employees
+2021,411090,General office clerks (incl. data entry),辦公室綜合事務人員(含資料登錄、一般事務秘書),Clerical support,40937,411090+413000,All employees
+2021,422290,Receptionists and information desk clerks (incl. switchboard),接待員及服務台事務人員(含總機),Clerical support,34984,422200+422300,All employees
+2021,431100,Bookkeeping and payroll clerks,會計助理、簿記、出納,Clerical support,44963,431100,All employees
+2021,432100,Stock clerks,存貨事務人員,Clerical support,40720,432100,All employees
+2021,432200,Production and material planning clerks,生產及物料規劃事務人員,Clerical support,45660,432200,All employees
+2021,491000,Human resources clerks,人事事務人員,Clerical support,37556,491000,All employees
+2021,810090,Production machine operators,生產機械設備操作人員、剪裁或裁縫人員,Machine operators and assemblers,31135,814291+819300,All employees
+2021,820000,Assemblers,組裝(現場)人員,Machine operators and assemblers,35215,820000,All employees
+2021,820001,Semiconductor production line operators,半導體製品產線作業人員,Machine operators and assemblers,40151,819901,All employees
+2022,112000,Senior executives (general managers and CEOs),高階主管(總經理及總執行長),Managers and supervisors,177469,112000,Full-time employees
+2022,120090,Middle managers,中階主管(經理),Managers and supervisors,120404,120090,Full-time employees
+2022,214100,"Quality, industrial and production engineers",品管、工管及生管工程師,Professionals,64183,214100,Full-time employees
+2022,215190,Electrical and electronics engineers,電機、電子工程師,Professionals,74301,215190,Full-time employees
+2022,217300,Product and garment designers (incl. industrial design),產品及服裝設計師(含工業設計),Professionals,61935,217300,Full-time employees
+2022,241100,Accountants and auditors,會(審)計師,Professionals,73964,241100,Full-time employees
+2022,242100,Project managers (incl. management consultants),專案管理師(含經營管理顧問),Professionals,71946,242100,Full-time employees
+2022,243100,Advertising and marketing professionals,廣告及行銷專業人員(含企劃),Professionals,74713,243100,Full-time employees
+2022,250000,"ICT professionals (systems analysis, programming, database and network)",資訊及通訊專業人員(含系統分析、程式設計、資料庫及網路專業人員),Professionals,83669,250000,Full-time employees
+2022,311390,Electrical and electronics technicians,電機、電子技術員,Technicians and associate professionals,44830,311390,Full-time employees
+2022,311700,"Quality, industrial and production technicians",品管、工管及生管技術員,Technicians and associate professionals,37804,311700,Full-time employees
+2022,312190,"Supervisors (site and office supervisors, section heads)",監督人員(含現場及辦公室主任、科/股長),Managers and supervisors,80625,312190,Full-time employees
+2022,331300,Accounting associates,會計人員,Technicians and associate professionals,55873,331300,Full-time employees
+2022,332290,Sales representatives,工商業銷售代表(含業務員),Technicians and associate professionals,55569,332290,Full-time employees
+2022,332300,Purchasing officers,採購員,Technicians and associate professionals,51105,332300,Full-time employees
+2022,334200,Executive secretaries,專業秘書,Technicians and associate professionals,62597,334200,Full-time employees
+2022,341191,Legal associates,法務人員,Technicians and associate professionals,61309,341191,Full-time employees
+2022,351090,IT operations and support technicians,資訊管理及維護技術員,Technicians and associate professionals,53611,351090,Full-time employees
+2022,411002,General affairs clerks,總務,Clerical support,42565,411002,Full-time employees
+2022,411090,General office clerks (incl. data entry),辦公室綜合事務人員(含資料登錄、一般事務秘書),Clerical support,43248,411090,Full-time employees
+2022,422290,Receptionists and information desk clerks (incl. switchboard),接待員及服務台事務人員(含總機),Clerical support,36840,422290,Full-time employees
+2022,431100,Bookkeeping and payroll clerks,會計助理、簿記、出納,Clerical support,45845,431100,Full-time employees
+2022,432100,Stock clerks,存貨事務人員,Clerical support,37724,432100,Full-time employees
+2022,432200,Production and material planning clerks,生產及物料規劃事務人員,Clerical support,44009,432200,Full-time employees
+2022,491000,Human resources clerks,人事事務人員,Clerical support,35425,491000,Full-time employees
+2022,810090,Production machine operators,生產機械設備操作人員、剪裁或裁縫人員,Machine operators and assemblers,34010,810090,Full-time employees
+2022,820000,Assemblers,組裝(現場)人員,Machine operators and assemblers,34660,820000,Full-time employees
+2022,820001,Semiconductor production line operators,半導體製品產線作業人員,Machine operators and assemblers,39084,820001,Full-time employees
+2023,112000,Senior executives (general managers and CEOs),高階主管(總經理及總執行長),Managers and supervisors,180431,112000,Full-time employees
+2023,120090,Middle managers,中階主管(經理),Managers and supervisors,122269,120090,Full-time employees
+2023,214100,"Quality, industrial and production engineers",品管、工管及生管工程師,Professionals,62941,214100,Full-time employees
+2023,215190,Electrical and electronics engineers,電機、電子工程師,Professionals,74346,215190,Full-time employees
+2023,217300,Product and garment designers (incl. industrial design),產品及服裝設計師(含工業設計),Professionals,66255,217300,Full-time employees
+2023,241100,Accountants and auditors,會(審)計師,Professionals,77793,241100,Full-time employees
+2023,242100,Project managers (incl. management consultants),專案管理師(含經營管理顧問),Professionals,76356,242100,Full-time employees
+2023,243100,Advertising and marketing professionals,廣告及行銷專業人員(含企劃),Professionals,79282,243100,Full-time employees
+2023,250000,"ICT professionals (systems analysis, programming, database and network)",資訊及通訊專業人員(含系統分析、程式設計、資料庫及網路專業人員),Professionals,87198,250000,Full-time employees
+2023,311390,Electrical and electronics technicians,電機、電子技術員,Technicians and associate professionals,44364,311390,Full-time employees
+2023,311700,"Quality, industrial and production technicians",品管、工管及生管技術員,Technicians and associate professionals,39755,311700,Full-time employees
+2023,312190,"Supervisors (site and office supervisors, section heads)",監督人員(含現場及辦公室主任、科/股長),Managers and supervisors,81291,312190,Full-time employees
+2023,331300,Accounting associates,會計人員,Technicians and associate professionals,56414,331300,Full-time employees
+2023,332290,Sales representatives,工商業銷售代表(含業務員),Technicians and associate professionals,59793,332290,Full-time employees
+2023,332300,Purchasing officers,採購員,Technicians and associate professionals,53834,332300,Full-time employees
+2023,334200,Executive secretaries,專業秘書,Technicians and associate professionals,62793,334200,Full-time employees
+2023,341191,Legal associates,法務人員,Technicians and associate professionals,66257,341191,Full-time employees
+2023,351090,IT operations and support technicians,資訊管理及維護技術員,Technicians and associate professionals,56121,351090,Full-time employees
+2023,411002,General affairs clerks,總務,Clerical support,44298,411002,Full-time employees
+2023,411090,General office clerks (incl. data entry),辦公室綜合事務人員(含資料登錄、一般事務秘書),Clerical support,41109,411090,Full-time employees
+2023,422290,Receptionists and information desk clerks (incl. switchboard),接待員及服務台事務人員(含總機),Clerical support,34503,422290,Full-time employees
+2023,431100,Bookkeeping and payroll clerks,會計助理、簿記、出納,Clerical support,45848,431100,Full-time employees
+2023,432100,Stock clerks,存貨事務人員,Clerical support,39393,432100,Full-time employees
+2023,432200,Production and material planning clerks,生產及物料規劃事務人員,Clerical support,44337,432200,Full-time employees
+2023,491000,Human resources clerks,人事事務人員,Clerical support,39806,491000,Full-time employees
+2023,810090,Production machine operators,生產機械設備操作人員、剪裁或裁縫人員,Machine operators and assemblers,34199,810090,Full-time employees
+2023,820000,Assemblers,組裝(現場)人員,Machine operators and assemblers,31053,820000,Full-time employees
+2023,820001,Semiconductor production line operators,半導體製品產線作業人員,Machine operators and assemblers,39709,820001,Full-time employees
+2024,112000,Senior executives (general managers and CEOs),高階主管(總經理及總執行長),Managers and supervisors,187536,112000,Full-time employees
+2024,120090,Middle managers,中階主管(經理),Managers and supervisors,125028,120090,Full-time employees
+2024,214100,"Quality, industrial and production engineers",品管、工管及生管工程師,Professionals,65394,214100,Full-time employees
+2024,215190,Electrical and electronics engineers,電機、電子工程師,Professionals,78350,215190,Full-time employees
+2024,217300,Product and garment designers (incl. industrial design),產品及服裝設計師(含工業設計),Professionals,68726,217300,Full-time employees
+2024,241100,Accountants and auditors,會(審)計師,Professionals,80332,241100,Full-time employees
+2024,242100,Project managers (incl. management consultants),專案管理師(含經營管理顧問),Professionals,75814,242100,Full-time employees
+2024,243100,Advertising and marketing professionals,廣告及行銷專業人員(含企劃),Professionals,79467,243100,Full-time employees
+2024,250000,"ICT professionals (systems analysis, programming, database and network)",資訊及通訊專業人員(含系統分析、程式設計、資料庫及網路專業人員),Professionals,88482,250000,Full-time employees
+2024,311390,Electrical and electronics technicians,電機、電子技術員,Technicians and associate professionals,45697,311390,Full-time employees
+2024,311700,"Quality, industrial and production technicians",品管、工管及生管技術員,Technicians and associate professionals,41110,311700,Full-time employees
+2024,312190,"Supervisors (site and office supervisors, section heads)",監督人員(含現場及辦公室主任、科/股長),Managers and supervisors,83350,312190,Full-time employees
+2024,331300,Accounting associates,會計人員,Technicians and associate professionals,57097,331300,Full-time employees
+2024,332290,Sales representatives,工商業銷售代表(含業務員),Technicians and associate professionals,61423,332290,Full-time employees
+2024,332300,Purchasing officers,採購員,Technicians and associate professionals,55460,332300,Full-time employees
+2024,334200,Executive secretaries,專業秘書,Technicians and associate professionals,63657,334200,Full-time employees
+2024,341191,Legal associates,法務人員,Technicians and associate professionals,65634,341191,Full-time employees
+2024,351090,IT operations and support technicians,資訊管理及維護技術員,Technicians and associate professionals,54121,351090,Full-time employees
+2024,411002,General affairs clerks,總務,Clerical support,45515,411002,Full-time employees
+2024,411090,General office clerks (incl. data entry),辦公室綜合事務人員(含資料登錄、一般事務秘書),Clerical support,42692,411090,Full-time employees
+2024,422290,Receptionists and information desk clerks (incl. switchboard),接待員及服務台事務人員(含總機),Clerical support,34530,422290,Full-time employees
+2024,431100,Bookkeeping and payroll clerks,會計助理、簿記、出納,Clerical support,47250,431100,Full-time employees
+2024,432100,Stock clerks,存貨事務人員,Clerical support,40348,432100,Full-time employees
+2024,432200,Production and material planning clerks,生產及物料規劃事務人員,Clerical support,44624,432200,Full-time employees
+2024,491000,Human resources clerks,人事事務人員,Clerical support,41422,491000,Full-time employees
+2024,810090,Production machine operators,生產機械設備操作人員、剪裁或裁縫人員,Machine operators and assemblers,33590,810090,Full-time employees
+2024,820000,Assemblers,組裝(現場)人員,Machine operators and assemblers,32511,820000,Full-time employees
+2024,820001,Semiconductor production line operators,半導體製品產線作業人員,Machine operators and assemblers,40943,820001,Full-time employees
